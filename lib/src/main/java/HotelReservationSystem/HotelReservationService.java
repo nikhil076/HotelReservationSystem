@@ -87,7 +87,7 @@ public class HotelReservationService
 				hotelPrices.put(set.getKey(), totalPrice);
 			}
 		}
-		System.out.println(hotelPrices);
+		System.out.println("All prices of Hotel is : "+hotelPrices);
 		String keyWithMinValue = Collections.min(hotelPrices.entrySet(), Entry.comparingByValue()).getKey();
 		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));
 		return keyWithMinValue;
