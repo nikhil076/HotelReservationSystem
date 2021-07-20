@@ -1,5 +1,7 @@
 package HotelReservationSystem;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,5 +17,14 @@ public class HotelReservationTest {
 		Assert.assertTrue(isValidHotel2);
 		boolean isValidHotel3 = hotelReservationService.addHotel("Ridgewood", 5, 220, 100, 150, 40);
 		Assert.assertTrue(isValidHotel3);
+	}
+	
+	@Test
+	public void ifDatesEntered_ShouldReturnCheapestHotel()
+	{
+		HotelReservationService hotelReservationService = new HotelReservationService();
+		hotelReservationService.addCustomer(1, "2021-07-15", "2021-07-16");
+		String result = hotelReservationService.getCheapestHotel(1,"15-07-2021","19-07-2021");
+		assertEquals("Lakewood", result);
 	}
 }
