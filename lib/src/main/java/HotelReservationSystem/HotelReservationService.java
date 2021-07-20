@@ -92,4 +92,9 @@ public class HotelReservationService
 		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));
 		return keyWithMinValue;
 	}
+	public boolean addAllWeekdayAndWeekendRatesOfHotel()
+	{
+		System.out.println(hotelList);
+		return true;
+	}
 }
