@@ -99,4 +99,52 @@ public class HotelReservationService
 		System.out.println(hotelList);
 		return true;
 	}
+	
+	public String cheapestBestRatedHotelWithinDate(int customerType, String startDate, String endDate)
+	{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		LocalDate dateBefore = LocalDate.parse(customerTypeList.get(customerType).getStartDate());
+		LocalDate dateAfter = LocalDate.parse(customerTypeList.get(customerType).getEndDate());
+		Map<Integer, Long> hotelPrices = new HashMap<Integer, Long>();
+		long totalPrice = 0;
+		Date d1 = null, d2 = null;
+		try {
+			d1 = dateFormat.parse(startDate);
+			d2 = dateFormat.parse(endDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		Calendar startCal = Calendar.getInstance();
+		startCal.setTime(d1);
+		Calendar endCal = Calendar.getInstance();
+		endCal.setTime(d2);
+		LocalDate date1 = dateBefore;
+		if (customerType == 1) 
+		{
+			for (Entry<Integer, Hotels> set : hotelListRating.entrySet()) 
+			{
+				Integer temp = set.getKey();
+				dateBefore = date1;
+				totalPrice = 0;
+				do 
+				{
+					if (DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SATURDAY
+							|| DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY) 
+					{
+						totalPrice += hotelListRating.get(temp).getWeekendRegularCustomerPrice();
+					} else 
+					{
+						totalPrice += hotelListRating.get(set.getKey()).getWeekdayRegularCustomerPrice();
+					}
+					dateBefore = dateBefore.plusDays(1);
+				} while (dateBefore.compareTo(dateAfter) == 0 || dateBefore.isBefore(dateAfter));
+				hotelPrices.put(set.getKey(), totalPrice);
+			}
+		}
+		System.out.println("All prices of Hotel is : "+hotelPrices);
+		String keyWithMinValue = Collections.min(hotelPrices.entrySet(), Entry.comparingByValue()).getKey();
+		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));
+		return keyWithMinValue;
+	}
 }

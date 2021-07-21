@@ -35,4 +35,12 @@ public class HotelReservationTest {
 		boolean result = hotelReservationService.addAllWeekdayAndWeekendRatesOfHotel();
 		assertTrue(result);
 	}
+	@Test
+	public void IfDatesEnteredToFindBestRatedHotelBetweenDates_ShouldReturnBestRatedHotel()
+	{
+		HotelReservationService hotelReservationService = new HotelReservationService();
+		hotelReservationService.addCustomer(1,"2021-07-15", "2021-07-16");
+		String result = hotelReservationService.cheapestBestRatedHotelWithinDate(1,"15-07-2021","19-07-2021");
+		assertEquals("RidgeWood", result);
+	}
 }
