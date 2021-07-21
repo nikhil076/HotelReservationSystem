@@ -47,7 +47,7 @@ public class HotelReservationService {
 		return true;
 	}
 
-	// type = 1 (Regular)
+	// type = 1 (Regular) , 0(Reward)
 	public String getCheapestHotel(int customerType, String startDate, String endDate) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		LocalDate dateBefore = LocalDate.parse(customerTypeList.get(customerType).getStartDate());
