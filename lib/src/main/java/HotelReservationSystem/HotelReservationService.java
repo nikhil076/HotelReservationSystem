@@ -38,12 +38,13 @@ public class HotelReservationService {
 	}
 
 	// to add customer details
-	public void addCustomer(int customerType, String startDate, String endDate) {
+	public boolean addCustomer(int customerType, String startDate, String endDate) {
 		customer.setCustomerType(customerType);
 		customer.setStartDate(startDate);
 		customer.setEndDate(endDate);
 
 		customerTypeList.put(customerType, customer);
+		return true;
 	}
 
 	// type = 1 (Regular)
@@ -83,6 +84,27 @@ public class HotelReservationService {
 				hotelPrices.put(set.getKey(), totalPrice);
 			}
 		}
+		else
+			 {
+				 for (Map.Entry<String, Hotels> set : hotelList.entrySet()) {
+						dateBefore = date1;
+						totalPrice = 0;
+						do
+						{
+							if(DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK))==DayOfWeek.SATURDAY || DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK))==DayOfWeek.SUNDAY)
+							{
+								totalPrice += hotelList.get(set.getKey()).getWeekendRewardCustomerPrice();
+							}
+							else
+							{
+								totalPrice += hotelList.get(set.getKey()).getWeekdayRewardCustomerPrice();
+							}
+							dateBefore = dateBefore.plusDays(1);
+						}
+						while(dateBefore.compareTo(dateAfter)==0 || dateBefore.isBefore(dateAfter));
+						hotelPrices.put(set.getKey(), totalPrice);
+					 }
+			 }
 		System.out.println("All prices of Hotel is : " + hotelPrices);
 		String keyWithMinValue = Collections.min(hotelPrices.entrySet(), Entry.comparingByValue()).getKey();
 		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));

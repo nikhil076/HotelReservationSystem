@@ -41,4 +41,12 @@ public class HotelReservationTest {
 		String result = hotelReservationService.cheapestBestRatedHotelWithinDate(1, "15-07-2021", "19-07-2021");
 		assertEquals("RidgeWood", result);
 	}
+	
+	@Test
+	public void TocheckIfRewardCustomerRatedAreAdded()
+	{
+		HotelReservationService hotelReservationService = new HotelReservationService();
+		boolean valid = hotelReservationService.addCustomer(0, "2021-07-15", "2021-07-16"); // 0 represent reward customer
+		Assert.assertTrue(valid);
+	}
 }
