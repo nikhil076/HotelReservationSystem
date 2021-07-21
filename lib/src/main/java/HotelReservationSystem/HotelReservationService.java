@@ -13,18 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class HotelReservationService 
-{
+public class HotelReservationService {
 
 	Map<String, Hotels> hotelList = new HashMap<String, Hotels>();
 	Map<Integer, Hotels> hotelListRating = new HashMap<Integer, Hotels>();
 	Hotels hotels;
 	Map<Integer, CustomerType> customerTypeList = new HashMap<Integer, CustomerType>();
 	CustomerType customer = new CustomerType();
-	
-	//To add hotel to the System
-	public boolean addHotel(String hotelName,int rating, double weekdayRateRegular, double weekdayRateReward, double weekendRateRegular, double weekendRateReward)
-	{
+
+	// To add hotel to the System
+	public boolean addHotel(String hotelName, int rating, double weekdayRateRegular, double weekdayRateReward,
+			double weekendRateRegular, double weekendRateReward) {
 		hotels = new Hotels();
 		hotels.setHotelName(hotelName);
 		hotels.setRating(rating);
@@ -32,7 +31,7 @@ public class HotelReservationService
 		hotels.setWeekdayRewardCustomerPrice(weekdayRateReward);
 		hotels.setWeekendRegularCustomerPrice(weekendRateRegular);
 		hotels.setWeekendRewardCustomerPrice(weekendRateReward);
-		
+
 		hotelList.put(hotelName, hotels);
 		hotelListRating.put(rating, hotels);
 		return true;
@@ -67,21 +66,16 @@ public class HotelReservationService
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(d2);
 		LocalDate date1 = dateBefore;
-		if (customerType == 1) 
-		{
-			for (Map.Entry<String, Hotels> set : hotelList.entrySet()) 
-			{
+		if (customerType == 1) {
+			for (Map.Entry<String, Hotels> set : hotelList.entrySet()) {
 				String temp = set.getKey();
 				dateBefore = date1;
 				totalPrice = 0;
-				do 
-				{
+				do {
 					if (DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SATURDAY
-							|| DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY) 
-					{
+							|| DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY) {
 						totalPrice += hotelList.get(temp).getWeekendRegularCustomerPrice();
-					} else 
-					{
+					} else {
 						totalPrice += hotelList.get(set.getKey()).getWeekdayRegularCustomerPrice();
 					}
 					dateBefore = dateBefore.plusDays(1);
@@ -89,19 +83,18 @@ public class HotelReservationService
 				hotelPrices.put(set.getKey(), totalPrice);
 			}
 		}
-		System.out.println("All prices of Hotel is : "+hotelPrices);
+		System.out.println("All prices of Hotel is : " + hotelPrices);
 		String keyWithMinValue = Collections.min(hotelPrices.entrySet(), Entry.comparingByValue()).getKey();
 		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));
 		return keyWithMinValue;
 	}
-	public boolean addAllWeekdayAndWeekendRatesOfHotel()
-	{
+
+	public boolean addAllWeekdayAndWeekendRatesOfHotel() {
 		System.out.println(hotelList);
 		return true;
 	}
-	
-	public String cheapestBestRatedHotelWithinDate(int customerType, String startDate, String endDate)
-	{
+
+	public String cheapestBestRatedHotelWithinDate(int customerType, String startDate, String endDate) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 		LocalDate dateBefore = LocalDate.parse(customerTypeList.get(customerType).getStartDate());
 		LocalDate dateAfter = LocalDate.parse(customerTypeList.get(customerType).getEndDate());
@@ -120,21 +113,16 @@ public class HotelReservationService
 		Calendar endCal = Calendar.getInstance();
 		endCal.setTime(d2);
 		LocalDate date1 = dateBefore;
-		if (customerType == 1) 
-		{
-			for (Entry<Integer, Hotels> set : hotelListRating.entrySet()) 
-			{
+		if (customerType == 1) {
+			for (Entry<Integer, Hotels> set : hotelListRating.entrySet()) {
 				Integer temp = set.getKey();
 				dateBefore = date1;
 				totalPrice = 0;
-				do 
-				{
+				do {
 					if (DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SATURDAY
-							|| DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY) 
-					{
+							|| DayOfWeek.of(dateBefore.get(ChronoField.DAY_OF_WEEK)) == DayOfWeek.SUNDAY) {
 						totalPrice += hotelListRating.get(temp).getWeekendRegularCustomerPrice();
-					} else 
-					{
+					} else {
 						totalPrice += hotelListRating.get(set.getKey()).getWeekdayRegularCustomerPrice();
 					}
 					dateBefore = dateBefore.plusDays(1);
@@ -142,7 +130,7 @@ public class HotelReservationService
 				hotelPrices.put(set.getKey(), totalPrice);
 			}
 		}
-		System.out.println("All prices of Hotel is : "+hotelPrices);
+		System.out.println("All prices of Hotel is : " + hotelPrices);
 		String keyWithMinValue = Collections.min(hotelPrices.entrySet(), Entry.comparingByValue()).getKey();
 		System.out.println("Cheapest hotel is " + keyWithMinValue + " with price " + hotelPrices.get(keyWithMinValue));
 		return keyWithMinValue;
