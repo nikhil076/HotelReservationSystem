@@ -39,7 +39,7 @@ public class HotelReservationTest {
 		HotelReservationService hotelReservationService = new HotelReservationService();
 		hotelReservationService.addCustomer(1, "2021-07-15", "2021-07-16");
 		String result = hotelReservationService.cheapestBestRatedHotelWithinDate(1, "15-07-2021", "19-07-2021");
-		assertEquals("RidgeWood", result);
+		assertEquals("Bridgewood", result);
 	}
 	
 	@Test
@@ -48,5 +48,14 @@ public class HotelReservationTest {
 		HotelReservationService hotelReservationService = new HotelReservationService();
 		boolean valid = hotelReservationService.addCustomer(0, "2021-07-15", "2021-07-16"); // 0 represent reward customer
 		Assert.assertTrue(valid);
+	}
+	
+	@Test
+	public void IfDatesEnteredForRewardCustomer_ShouldReturnCheapestBestRatedHotel()
+	{
+		HotelReservationService hotelReservationService = new HotelReservationService();
+		hotelReservationService.addCustomer(0, "2021-07-15", "2021-07-16");
+		String result = hotelReservationService.getCheapestHotel(0, "2021-07-15", "2021-07-16");
+		assertEquals("Ridgewood", result);
 	}
 }
