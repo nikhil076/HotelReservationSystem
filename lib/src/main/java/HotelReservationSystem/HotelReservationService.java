@@ -17,6 +17,7 @@ public class HotelReservationService
 {
 
 	Map<String, Hotels> hotelList = new HashMap<String, Hotels>();
+	Map<Integer, Hotels> hotelListRating = new HashMap<Integer, Hotels>();
 	Hotels hotels;
 	Map<Integer, CustomerType> customerTypeList = new HashMap<Integer, CustomerType>();
 	CustomerType customer = new CustomerType();
@@ -33,6 +34,7 @@ public class HotelReservationService
 		hotels.setWeekendRewardCustomerPrice(weekendRateReward);
 		
 		hotelList.put(hotelName, hotels);
+		hotelListRating.put(rating, hotels);
 		return true;
 	}
 
